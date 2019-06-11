@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+
+  wordpress:
+    container_name: ${WP_CONTAINER_NAME}
+    image: wordpress:5.2.1-php7.2-apache
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - wp-content:/var/www/html/wp-content
+    environment:
+      WORDPRESS_DB_HOST: ${DB_HOST}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${DB_NAME}
+
+  db:
+    container_name: ${DB_CONTAINER_NAME}
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - ./docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/:ro
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+
+volumes:
+  mysql-data:
+  wp-content:
