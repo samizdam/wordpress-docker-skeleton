@@ -58,8 +58,18 @@ For restore backup from custom date, you can use mc client manual (`./mc` binary
 
 ## FAQ / Trouble shooting
 
-### My site is running, but styles is broken / I see old domain in URL path for css.
-A: You need change siteurl option in database: `update wp_options set option_value='http://NEW_DOMAIN/' where option_id=1;`
+### My site is running, but styles is broken / I see old domain in URL path for css / Request handled WP with redirect to outdated url. 
+A: You need change siteurl option in database: `update wp_options set option_value='http://NEW_DOMAIN/' where option_name=siteurl;`
+Wordpress has to _hardcoded_ url in database: 
+```
++-----------+-------------+-----------------------+----------+
+| option_id | option_name | option_value          | autoload |
++-----------+-------------+-----------------------+----------+
+|         1 | siteurl     | https://example.com/ | yes      |
+|         2 | home        | https://example.com  | yes      |
++-----------+-------------+-----------------------+----------+
+
+```
 
 ### Site ask me about FTP credentials when I try install/update/remove plugins, themes, etc.
 A: After restoring wp-content, owner of files your local user, instead `www-data`. You can go to container and run `chown -R www-data:www-data wp-content`. 
@@ -68,3 +78,4 @@ TODO:
 - Let's Encrypt certificate issue  
 - Crontab backup entries
 - `wp-content` permission after restoring (`www-data` rights issue) 
+- Describe development workflow: how to update WP core, install plugins, change themes localy and delivery changes to production
