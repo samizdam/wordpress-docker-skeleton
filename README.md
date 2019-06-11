@@ -15,6 +15,8 @@ make install # if you want use remote backups
 make run
 ```
 
+Now you have fresh WP instance and can pass installation wizard. 
+
 ## Restore Data from Existing Wordpress
 
 ### Case 1: I has actual version of WP and want migrate to Dockerized Skeleton
@@ -54,6 +56,15 @@ make restore-from-backup
 
 For restore backup from custom date, you can use mc client manual (`./mc` binary exists in project after `make install`). 
 
+## FAQ / Trouble shooting
+
+### My site is running, but styles is broken / I see old domain in URL path for css.
+A: You need change siteurl option in database: `update wp_options set option_value='http://NEW_DOMAIN/' where option_id=1;`
+
+### Site ask me about FTP credentials when I try install/update/remove plugins, themes, etc.
+A: After restoring wp-content, owner of files your local user, instead `www-data`. You can go to container and run `chown -R www-data:www-data wp-content`. 
+
 TODO: 
 - Let's Encrypt certificate issue  
 - Crontab backup entries
+- `wp-content` permission after restoring (`www-data` rights issue) 
