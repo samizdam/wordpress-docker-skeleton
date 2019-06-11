@@ -43,7 +43,7 @@ restore-from-backup:
 	./mc cp minio/$(PROJECT_NAME)/latest.wp-content.tar.gz ./backups/wp-content.tar.gz
 
 	gzip -cd ./backups/dump.sql.gz > ./docker-entrypoint-initdb.d/dump.sql
-	tar -xvf ./backups/wp-content.tar.gz -C ./wp-content/
+	tar -xvf ./backups/wp-content.tar.gz
 
 	make restore-wp-content
 	make restore-db
