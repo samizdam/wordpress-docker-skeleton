@@ -4,10 +4,10 @@ services:
 
   wordpress:
     container_name: ${WP_CONTAINER_NAME}
-    image: wordpress:5.2.1-php7.2-apache
+    image: ${WP_IMAGE}
     restart: always
     ports:
-      - 8080:80
+      - ${HOST_HTTP_PORT}:80
     volumes:
       - wp-content:/var/www/html/wp-content
     environment:
@@ -18,7 +18,7 @@ services:
 
   db:
     container_name: ${DB_CONTAINER_NAME}
-    image: mysql:5.7
+    image: ${DB_IMAGE}
     restart: always
     volumes:
       - ./docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/:ro
