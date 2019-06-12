@@ -93,5 +93,4 @@ A: Add next entry to your crontab (`crontab -e`)
 - for local backups: `0 1 * * * cd PATH_TO_YOUR_PROJECT && make dump-db; make dump-wp-content` 
 
 ## TODO: 
-- `wp-content` permission after restoring (`www-data` rights issue) 
 - Describe development workflow: how to update WP core, install plugins, change themes localy and delivery changes to production

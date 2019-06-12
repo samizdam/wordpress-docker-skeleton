@@ -30,6 +30,7 @@ dump-wp-content:
 
 restore-wp-content:
 	docker cp ./wp-content $(WP_CONTAINER_NAME):/var/www/html
+	docker exec $(WP_CONTAINER_NAME) chown -R www-data:www-data /var/www/html/wp-content
 
 backup-all: dump-db dump-wp-content
 	gzip -c ./docker-entrypoint-initdb.d/dump.sql > backups/dump.sql.gz
