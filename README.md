@@ -80,13 +80,18 @@ Wordpress has to _hardcoded_ url in database:
 ### Site ask me about FTP credentials when I try install/update/remove plugins, themes, etc.
 A: After restoring wp-content, owner of files your local user, instead `www-data`. You can go to container and run `chown -R www-data:www-data wp-content`. 
 
-### I need SSL certificate for my domain
-1. Set actual values for variables `HOSTNAME, LETSENCRYPT_EMAIL, EXTERNAL_NETWORK` in .env file. 
-2. clone https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion and start it. 
+### I need SSL certificate for my domain 
+1. clone https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion and start it. 
+2. Set actual values for variables `HOSTNAME, LETSENCRYPT_EMAIL, EXTERNAL_NETWORK` in .env file.
+3. Uncomment `EXTERNAL_NETWORK` value of `wordpress.networks` in docker-compose-network.yml
+  
+If you use this option, you can drop ports entry in docker-compose-network.yml, nginx-proxy doesn't need it. 
 
-If you use this options, you can drop ports entry in docker-compose-network.yml, nginx-proxy doesn't need it. 
+### How to I can backup my block with crontab? 
+A: Add next entry to your crontab (`crontab -e`)
+- for S3 backups: `0 1 * * * cd PATH_TO_YOUR_PROJECT && make backup-all` 
+- for local backups: `0 1 * * * cd PATH_TO_YOUR_PROJECT && make dump-db; make dump-wp-content` 
 
-TODO: 
-- Crontab backup entries
+## TODO: 
 - `wp-content` permission after restoring (`www-data` rights issue) 
 - Describe development workflow: how to update WP core, install plugins, change themes localy and delivery changes to production
