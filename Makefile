@@ -4,18 +4,20 @@ include .env
 export
 
 install:
+	cp docker-compose-network-example.yml docker-compose-network.yml
+
 	curl -o mc https://dl.min.io/client/mc/release/linux-amd64/mc
 	chmod +x mc
 	./mc config host add minio $(S3_URL) $(S3_ACCESS_KEY) $(S3_SECRET_KEY)
 
 run:
-	docker-compose up -d
+	docker-compose -p ${PROJECT_NAME} -f docker-compose.yml -f docker-compose-network.yml up -d
 
 stop:
-	docker-compose down
+	docker-compose -p ${PROJECT_NAME} -f docker-compose.yml -f docker-compose-network.yml down
 
 clean:
-	docker-compose rm --stop --force
+	docker-compose -p ${PROJECT_NAME} -f docker-compose.yml -f docker-compose-network.yml rm --stop --force
 
 dump-db:
 	docker exec $(DB_CONTAINER_NAME) mysqldump -u $(DB_USER) -p$(DB_PASSWORD) $(DB_NAME) > docker-entrypoint-initdb.d/dump.sql

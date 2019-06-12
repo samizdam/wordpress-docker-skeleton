@@ -1,5 +1,12 @@
 # Wordpress Dockerized Skeleton
 
+## Requirements
+
+1. docker-compose with support 3.5+ file version
+2. make
+3. bash
+4. curl 
+
 ## Install
 ```
 git clone git@gitlab.samizdam.net:samizdam/wordpress-docker-skeleton.git
@@ -7,7 +14,7 @@ cd wordpress-docker-skeleton
 
 cp .env.example .env # change your S3 values for use remote backups
 
-make install # if you want use remote backups
+make install # if you want use remote backups, optional. If you doesn't want use S3 for backups, you need run `cp docker-compose-network-example.yml docker-compose-network.yml` manual. 
 ```
 
 ## Run
@@ -68,14 +75,18 @@ Wordpress has to _hardcoded_ url in database:
 |         1 | siteurl     | https://example.com/ | yes      |
 |         2 | home        | https://example.com  | yes      |
 +-----------+-------------+-----------------------+----------+
-
 ```
 
 ### Site ask me about FTP credentials when I try install/update/remove plugins, themes, etc.
 A: After restoring wp-content, owner of files your local user, instead `www-data`. You can go to container and run `chown -R www-data:www-data wp-content`. 
 
+### I need SSL certificate for my domain
+1. Set actual values for variables `HOSTNAME, LETSENCRYPT_EMAIL, EXTERNAL_NETWORK` in .env file. 
+2. clone https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion and start it. 
+
+If you use this options, you can drop ports entry in docker-compose-network.yml, nginx-proxy doesn't need it. 
+
 TODO: 
-- Let's Encrypt certificate issue  
 - Crontab backup entries
 - `wp-content` permission after restoring (`www-data` rights issue) 
 - Describe development workflow: how to update WP core, install plugins, change themes localy and delivery changes to production

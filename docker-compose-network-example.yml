@@ -1,0 +1,20 @@
+version: "3.5"
+
+services:
+  wordpress:
+    environment:
+      VIRTUAL_HOST: ${HOSTNAME}
+      LETSENCRYPT_HOST: ${HOSTNAME}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+    ports:
+      - ${HOST_HTTP_PORT}:80
+    networks:
+#      - ${EXTERNAL_NETWORK}
+      - default
+
+  db:
+
+networks:
+  webproxy:
+    name: ${EXTERNAL_NETWORK}
+    external: true
