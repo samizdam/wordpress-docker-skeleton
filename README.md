@@ -9,7 +9,7 @@
 
 ## Install
 ```
-git clone git@gitlab.samizdam.net:samizdam/wordpress-docker-skeleton.git
+git clone git@github.com:samizdam/wordpress-docker-skeleton.git
 cd wordpress-docker-skeleton
 
 cp .env.example .env # change your S3 values for use remote backups
