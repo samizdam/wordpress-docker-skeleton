@@ -81,7 +81,7 @@ Wordpress has to _hardcoded_ url in database:
 A: After restoring wp-content, owner of files your local user, instead `www-data`. You can go to container and run `chown -R www-data:www-data wp-content`. 
 
 ### I need SSL certificate for my domain 
-1. clone https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion and start it. 
+1. clone https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion and start it. 
 2. Set actual values for variables `HOSTNAME, LETSENCRYPT_EMAIL, EXTERNAL_NETWORK` in .env file.
 3. Uncomment `EXTERNAL_NETWORK` value of `wordpress.networks` in docker-compose-network.yml
   
