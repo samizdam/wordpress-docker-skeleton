@@ -13,6 +13,8 @@ services:
       - default
 
   db:
+    networks:
+      - default
 
 networks:
   webproxy:
