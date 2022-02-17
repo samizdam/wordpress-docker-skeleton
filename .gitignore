@@ -1,5 +1,5 @@
 /.idea/
-
+/.vscode/
 /.env
 /docker-compose-network.yml
 /mc
