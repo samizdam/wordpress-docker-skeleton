@@ -1,13 +1,13 @@
-version: "3.8"
-
+version: "3.9"
 services:
-
   wordpress:
     container_name: ${WP_CONTAINER_NAME}
+    depends_on:
+      - db
     image: ${WP_IMAGE}
     restart: always
     volumes:
-      - wp-content:/var/www/html/wp-content
+      - ./wp-content:/var/www/html/wp-content
     environment:
       WORDPRESS_DB_HOST: ${DB_HOST}
       WORDPRESS_DB_USER: ${DB_USER}
